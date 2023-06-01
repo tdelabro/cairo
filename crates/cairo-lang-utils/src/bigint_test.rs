@@ -1,4 +1,6 @@
-use std::ops::Neg;
+#[cfg(not(feature = "std"))]
+use alloc::format;
+use core::ops::Neg;
 
 use num_bigint::BigInt;
 use num_traits::Num;

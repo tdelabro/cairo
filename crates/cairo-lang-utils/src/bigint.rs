@@ -2,7 +2,9 @@
 #[path = "bigint_test.rs"]
 mod test;
 
-use std::ops::Neg;
+#[cfg(not(feature = "std"))]
+use alloc::{format, string::String};
+use core::ops::Neg;
 
 use num_bigint::{BigInt, BigUint, ToBigInt};
 use num_traits::{Num, Signed};

@@ -1,4 +1,4 @@
-use std::fmt::{Display, Formatter};
+use core::fmt::{Display, Formatter};
 
 use indoc::writedoc;
 use serde::{Deserialize, Serialize};
@@ -28,7 +28,7 @@ impl From<StarknetHint> for Hint {
 }
 
 impl Display for Hint {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut Formatter<'_>) -> core::fmt::Result {
         match self {
             Hint::Core(hint) => hint.fmt(f),
             Hint::Starknet(hint) => hint.fmt(f),
@@ -74,7 +74,7 @@ impl From<DeprecatedHint> for CoreHintBase {
 }
 
 impl Display for CoreHintBase {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut Formatter<'_>) -> core::fmt::Result {
         match self {
             CoreHintBase::Core(hint) => hint.fmt(f),
             CoreHintBase::Deprecated(_) => {
@@ -295,7 +295,7 @@ pub enum DeprecatedHint {
 
 struct DerefOrImmediateFormatter<'a>(&'a DerefOrImmediate);
 impl<'a> Display for DerefOrImmediateFormatter<'a> {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut Formatter<'_>) -> core::fmt::Result {
         match self.0 {
             DerefOrImmediate::Deref(d) => write!(f, "memory{d}"),
             DerefOrImmediate::Immediate(i) => write!(f, "{}", i.value),
@@ -305,7 +305,7 @@ impl<'a> Display for DerefOrImmediateFormatter<'a> {
 
 struct ResOperandFormatter<'a>(&'a ResOperand);
 impl<'a> Display for ResOperandFormatter<'a> {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut Formatter<'_>) -> core::fmt::Result {
         match self.0 {
             ResOperand::Deref(d) => write!(f, "memory{d}"),
             ResOperand::DoubleDeref(d, i) => write!(f, "memory[memory{d} + {i}]"),
@@ -324,7 +324,7 @@ impl<'a> Display for ResOperandFormatter<'a> {
 }
 
 impl Display for CoreHint {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut Formatter<'_>) -> core::fmt::Result {
         match self {
             CoreHint::AllocSegment { dst } => write!(f, "memory{dst} = segments.add()"),
             CoreHint::AllocFelt252Dict { segment_arena_ptr } => {
@@ -721,7 +721,7 @@ impl Display for CoreHint {
 }
 
 impl Display for StarknetHint {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut Formatter<'_>) -> core::fmt::Result {
         match self {
             StarknetHint::SystemCall { system } => {
                 write!(f, "syscall_handler.syscall(syscall_ptr={})", ResOperandFormatter(system))

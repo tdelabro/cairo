@@ -1,4 +1,4 @@
-use std::fmt::Display;
+use core::fmt::Display;
 
 use cairo_lang_utils::bigint::BigIntAsHex;
 use serde::{Deserialize, Serialize};
@@ -13,7 +13,7 @@ pub enum Register {
     FP,
 }
 impl Display for Register {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         match self {
             Register::AP => write!(f, "ap"),
             Register::FP => write!(f, "fp"),
@@ -30,7 +30,7 @@ pub enum ResOperand {
     BinOp(BinOpOperand),
 }
 impl Display for ResOperand {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         match self {
             ResOperand::Deref(operand) => write!(f, "{operand}"),
             ResOperand::DoubleDeref(operand, offset) => write!(f, "[{operand} + {offset}]"),
@@ -61,7 +61,7 @@ pub struct CellRef {
     pub offset: i16,
 }
 impl Display for CellRef {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         write!(f, "[{} + {}]", self.register, self.offset)
     }
 }
@@ -77,7 +77,7 @@ pub enum DerefOrImmediate {
     Immediate(BigIntAsHex),
 }
 impl Display for DerefOrImmediate {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         match self {
             DerefOrImmediate::Deref(operand) => write!(f, "{operand}"),
             DerefOrImmediate::Immediate(operand) => write!(f, "{}", operand.value),
@@ -101,7 +101,7 @@ pub enum Operation {
     Mul,
 }
 impl Display for Operation {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         match self {
             Operation::Add => write!(f, "+"),
             Operation::Mul => write!(f, "*"),
@@ -116,7 +116,7 @@ pub struct BinOpOperand {
     pub b: DerefOrImmediate,
 }
 impl Display for BinOpOperand {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         write!(f, "{} {} {}", self.a, self.op, self.b)
     }
 }
